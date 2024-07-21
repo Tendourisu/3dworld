@@ -1,0 +1,5 @@
+# ignore 3D model files
+*.obj
+
+# ignore ./build
+build
