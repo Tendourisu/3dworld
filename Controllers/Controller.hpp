@@ -22,6 +22,7 @@ class Controller {
 
         enum class Result {
             R_OK,
+            R_FILE_EXTENSION_ERROR,
             R_FILE_OPEN_ERROR,
             R_FILE_FORMAT_ERROR,
             R_ID_OUT_OF_BOUNDS,

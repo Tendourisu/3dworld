@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <string>
 #include "../Models/Model.hpp"
 
@@ -11,5 +12,9 @@ using BasePoint3D = BasePoint<3>;
 
 class AbstractExporter {
     public:
-        virtual void Export(std::string path, const Model3D& model) const = 0;
+        void Export(std::string path, const Model3D& model) const;
+    
+    protected:
+        virtual bool CheckExtension(std::string path) const = 0;
+        virtual void Save(std::ofstream& file, const Model3D& model) const = 0;
 };

@@ -44,7 +44,11 @@ void ConsoleView::Run(Controller& controller) const {
 bool ConsoleView::LoadModel(Controller& controller, std::string* path) const {
     auto fileName = Ask("Enter 3D model file: ", false, true);
     auto result = controller.LoadModel(fileName);
-    if (result == Controller::Result::R_FILE_OPEN_ERROR) {
+    if (result == Controller::Result::R_FILE_EXTENSION_ERROR) {
+        Output << Brush::FG_RED << "error: Invalid file extension." << Brush::CLEAR << std::endl;
+        return false;
+    }
+    else if (result == Controller::Result::R_FILE_OPEN_ERROR) {
         Output << Brush::FG_RED << "error: Cannot open file '";
         Output << std::filesystem::path(fileName).filename().c_str();
         Output << "'." << Brush::CLEAR << std::endl;
@@ -76,10 +80,15 @@ void ConsoleView::SaveModel(const Controller& controller, std::string defaultPat
         fileName = defaultPath;
     }
     auto result = controller.SaveModel(fileName);
-    if (result == Controller::Result::R_FILE_OPEN_ERROR) {
+    if (result == Controller::Result::R_FILE_EXTENSION_ERROR) {
+        Output << Brush::FG_RED << "error: Invalid file extension." << Brush::CLEAR << std::endl;
+        return;
+    }
+    else if (result == Controller::Result::R_FILE_OPEN_ERROR) {
         Output << Brush::FG_RED << "error: Cannot open file '";
         Output << std::filesystem::path(fileName).filename().c_str();
         Output << "'." << Brush::CLEAR << std::endl;
+        return;
     }
     Output << Brush::FG_GREEN << "Successfully saved to '";
     Output << std::filesystem::path(fileName).filename().c_str();

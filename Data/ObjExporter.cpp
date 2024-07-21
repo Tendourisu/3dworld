@@ -4,13 +4,11 @@
 #include "ObjExporter.hpp"
 #include "../Models/Model.hpp"
 
-void ObjExporter::Export(std::string path, const Model3D& model) const {
-    std::ofstream file;
-    file.open(path, std::ios::trunc);
-    if (!file.is_open()) {
-        throw FileOpenException();
-    }
-    file << "# " << std::filesystem::path(path).filename().c_str() << std::endl;
+bool ObjExporter::CheckExtension(std::string path) const {
+    return std::filesystem::path(path).extension() == ".obj";
+}
+
+void ObjExporter::Save(std::ofstream& file, const Model3D& model) const {
     file << "g " << model.Name << std::endl;
     for (auto point: model.CollectPoints()) {
         file << "v ";

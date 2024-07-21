@@ -15,6 +15,11 @@ class DowngradeException: public std::invalid_argument {
         DowngradeException(): invalid_argument("Cannot downgrade point dimension.") {}
 };
 
+class FileExtensionException: public std::invalid_argument {
+    public:
+        FileExtensionException(): invalid_argument("Invalid file extension.") {}
+};
+
 class FileOpenException: public std::invalid_argument {
     public:
         FileOpenException(): invalid_argument("Cannot open specific file.") {}

@@ -11,6 +11,9 @@ Controller::Result Controller::LoadModel(std::string path) {
     try {
         importer.Import(path, m_Model);
     }
+    catch (FileExtensionException) {
+        return Result::R_FILE_EXTENSION_ERROR;
+    }
     catch (FileOpenException) {
         return Result::R_FILE_OPEN_ERROR;
     }
@@ -35,6 +38,9 @@ Controller::Result Controller::SaveModel(std::string path) const {
     ObjExporter exporter;
     try {
         exporter.Export(path, m_Model);
+    }
+    catch (FileExtensionException) {
+        return Result::R_FILE_EXTENSION_ERROR;
     }
     catch (FileOpenException) {
         return Result::R_FILE_OPEN_ERROR;

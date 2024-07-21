@@ -1,10 +1,12 @@
 #pragma once
 
+#include <fstream>
 #include <string>
 #include "AbstractImporter.hpp"
 #include "../Models/Model.hpp"
 
 class ObjImporter: public AbstractImporter {
-    public:
-        void Import(std::string path, Model3D& model) const override;
+    protected:
+        bool CheckExtension(std::string path) const override;
+        void Load(std::ifstream& file, Model3D& model) const override;
 };

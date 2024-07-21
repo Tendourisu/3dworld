@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -6,12 +7,11 @@
 #include "../Errors.hpp"
 #include "../Models/Model.hpp"
 
-void ObjImporter::Import(std::string path, Model3D& model) const {
-    std::ifstream file;
-    file.open(path, std::ios::in);
-    if (!file.is_open()) {
-        throw FileOpenException();
-    }
+bool ObjImporter::CheckExtension(std::string path) const {
+    return std::filesystem::path(path).extension() == ".obj";
+}
+
+void ObjImporter::Load(std::ifstream &file, Model3D& model) const {
     std::vector<std::shared_ptr<Point3D>> points;
     while (!file.eof()) {
         std::string line;
@@ -54,5 +54,4 @@ void ObjImporter::Import(std::string path, Model3D& model) const {
             }
         }
     }
-    file.close();
 }
